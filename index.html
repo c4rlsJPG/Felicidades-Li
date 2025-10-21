@@ -33,6 +33,8 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Pantalla de login mejorada */
@@ -42,6 +44,10 @@
             animation: fadeIn 1.5s ease-out;
             position: relative;
             z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
         }
 
         .login-screen::before {
@@ -170,6 +176,7 @@
             height: 100%;
             padding: 0;
             flex-direction: column;
+            flex-grow: 1;
         }
 
         .video-container {
@@ -190,18 +197,19 @@
         /* Pantalla de créditos con texto continuo */
         .credits-screen {
             display: none;
-            padding: 40px 25px;
+            padding: 30px 20px;
             text-align: center;
             background: linear-gradient(135deg, #4b0082, #8a2be2);
             position: relative;
             overflow-y: auto;
-            max-height: 80vh;
             flex-direction: column;
+            flex-grow: 1;
+            justify-content: flex-start;
         }
 
         .credits-title {
             font-size: 2.2rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             background: linear-gradient(to right, #ffd700, #ff69b4);
             -webkit-background-clip: text;
             background-clip: text;
@@ -213,18 +221,17 @@
             max-width: 800px;
             margin: 0 auto;
             text-align: left;
-            flex-grow: 1;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             line-height: 1.7;
             font-size: 1.1rem;
         }
 
         .text-block {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s ease forwards;
@@ -239,21 +246,6 @@
         .text-block:nth-child(7) { animation-delay: 1.4s; }
         .text-block:nth-child(8) { animation-delay: 1.6s; }
         .text-block:nth-child(9) { animation-delay: 1.8s; }
-
-        .special-date {
-            display: block;
-            font-weight: bold;
-            color: #ffd700;
-            margin: 15px 0 5px;
-            font-size: 1.2rem;
-        }
-
-        .date-description {
-            font-style: italic;
-            margin-bottom: 15px;
-            padding-left: 15px;
-            border-left: 3px solid #ff69b4;
-        }
 
         .highlight {
             background: linear-gradient(transparent 60%, rgba(255, 215, 0, 0.3) 40%);
@@ -372,17 +364,32 @@
 
         /* Responsive */
         @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                min-height: 100vh;
+                height: auto;
+            }
+            
             .container {
                 max-width: 100%;
                 border-radius: 20px;
+                min-height: 90vh;
+                margin: 10px 0;
             }
             
             .login-title, .credits-title {
                 font-size: 2rem;
             }
             
-            .login-screen, .credits-screen {
+            .login-screen {
                 padding: 30px 20px;
+                justify-content: center;
+            }
+            
+            .credits-screen {
+                padding: 25px 15px;
+                justify-content: flex-start;
             }
             
             .credits-text {
@@ -394,8 +401,29 @@
                 height: 60vh;
             }
             
-            .special-date {
-                font-size: 1.1rem;
+            .login-btn, .restart-btn {
+                padding: 14px 30px;
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .password-input {
+                padding: 14px 18px;
+            }
+        }
+
+        /* Mejoras para dispositivos muy pequeños */
+        @media (max-width: 360px) {
+            .login-title, .credits-title {
+                font-size: 1.8rem;
+            }
+            
+            .login-screen, .credits-screen {
+                padding: 20px 15px;
+            }
+            
+            .credits-text {
+                padding: 15px;
             }
         }
 
@@ -406,6 +434,11 @@
 
         input, button {
             font-size: 16px; /* Evita el zoom en iOS */
+        }
+        
+        /* Asegurar que el contenedor se centre correctamente */
+        html, body {
+            height: 100%;
         }
     </style>
 </head>
@@ -459,15 +492,15 @@
                 </div>
                 
                 <div class="text-block">
-                    <p>El 29/4/2025 fue el día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</p>
+                    <p>El <span class="highlight">29/4/2025</span> fue el día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</p>
                 </div>
                 
                 <div class="text-block">
-                    <p>El 3/10/2025 fue cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</p>
+                    <p>El <span class="highlight">3/10/2025</span> fue cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</p>
                 </div>
                 
                 <div class="text-block">
-                    <p>Eres una persona maravillosa con un corazón increíble, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
+                    <p>Eres una persona maravillosa con un <span class="highlight">corazón increíble</span>, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
                 </div>
                 
                 <div class="text-block">
@@ -487,7 +520,7 @@
                 </div>
                 
                 <div class="text-block">
-                    <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, dime. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
+                    <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, <span class="highlight">dime</span>. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
                     
                     <p>¡Feliz Cumpleaños Lisa! Que este día esté lleno de alegría genuina, risas contagiosas, amor sincero y todos los buenos deseos que mereces por ser la persona maravillosa que eres. Te deseo un año lleno de aventuras emocionantes, crecimiento personal significativo, sueños cumplidos y momentos verdaderamente inolvidables.</p>
                 </div>
@@ -542,7 +575,7 @@
             // Volver al inicio desde los créditos
             restartBtn.addEventListener('click', function() {
                 creditsScreen.style.display = 'none';
-                loginScreen.style.display = 'block';
+                loginScreen.style.display = 'flex';
                 passwordInput.value = '';
                 video.currentTime = 0;
                 video.pause();
