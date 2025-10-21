@@ -169,7 +169,7 @@
             animation: shake 0.5s ease;
         }
 
-        /* Pantalla del video */
+        /* Pantalla del video - CORREGIDA */
         .video-screen {
             display: none;
             position: relative;
@@ -177,11 +177,13 @@
             padding: 0;
             flex-direction: column;
             flex-grow: 1;
+            justify-content: center;
+            align-items: center;
         }
 
         .video-container {
             width: 100%;
-            height: 70vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -191,7 +193,7 @@
         video {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
 
         /* Pantalla de créditos con texto continuo */
@@ -246,11 +248,6 @@
         .text-block:nth-child(7) { animation-delay: 1.4s; }
         .text-block:nth-child(8) { animation-delay: 1.6s; }
         .text-block:nth-child(9) { animation-delay: 1.8s; }
-
-        .highlight {
-            background: linear-gradient(transparent 60%, rgba(255, 215, 0, 0.3) 40%);
-            padding: 0 5px;
-        }
 
         .heart {
             color: #ff69b4;
@@ -398,7 +395,7 @@
             }
             
             .video-container {
-                height: 60vh;
+                height: 100%;
             }
             
             .login-btn, .restart-btn {
@@ -492,15 +489,15 @@
                 </div>
                 
                 <div class="text-block">
-                    <p>El <span class="highlight">29/4/2025</span> fue el día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</p>
+                    <p>El 29/4/2025 fue el día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</p>
                 </div>
                 
                 <div class="text-block">
-                    <p>El <span class="highlight">3/10/2025</span> fue cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</p>
+                    <p>El 3/10/2025 fue cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</p>
                 </div>
                 
                 <div class="text-block">
-                    <p>Eres una persona maravillosa con un <span class="highlight">corazón increíble</span>, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
+                    <p>Eres una persona maravillosa con un corazón increíble, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
                 </div>
                 
                 <div class="text-block">
@@ -520,7 +517,7 @@
                 </div>
                 
                 <div class="text-block">
-                    <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, <span class="highlight">dime</span>. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
+                    <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, dime. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
                     
                     <p>¡Feliz Cumpleaños Lisa! Que este día esté lleno de alegría genuina, risas contagiosas, amor sincero y todos los buenos deseos que mereces por ser la persona maravillosa que eres. Te deseo un año lleno de aventuras emocionantes, crecimiento personal significativo, sueños cumplidos y momentos verdaderamente inolvidables.</p>
                 </div>
