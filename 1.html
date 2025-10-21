@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños Lisa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #8a2be2, #ff69b4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: #fff;
+            padding: 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Pantalla de login mejorada */
+        .login-screen {
+            padding: 40px 25px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><defs><pattern id="gift" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="5" fill="white"/><circle cx="50" cy="50" r="8" fill="white"/><circle cx="80" cy="80" r="6" fill="white"/></pattern></defs><rect width="100" height="100" fill="url(%23gift)"/></svg>');
+            z-index: -1;
+        }
+
+        .login-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #ffd700, transparent);
+        }
+
+        .login-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .password-container {
+            max-width: 400px;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+
+        .password-label {
+            display: block;
+            text-align: left;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #ffd700;
+            font-size: 1rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .password-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .password-hint {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #8a2be2;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        /* Pantalla del video */
+        .video-screen {
+            display: none;
+            position: relative;
+            height: 100%;
+            padding: 0;
+            flex-direction: column;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 70vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Pantalla de créditos con texto continuo */
+        .credits-screen {
+            display: none;
+            padding: 40px 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #4b0082, #8a2be2);
+            position: relative;
+            overflow-y: auto;
+            max-height: 80vh;
+            flex-direction: column;
+        }
+
+        .credits-title {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .credits-text {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .text-block {
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .text-block:nth-child(1) { animation-delay: 0.2s; }
+        .text-block:nth-child(2) { animation-delay: 0.4s; }
+        .text-block:nth-child(3) { animation-delay: 0.6s; }
+        .text-block:nth-child(4) { animation-delay: 0.8s; }
+        .text-block:nth-child(5) { animation-delay: 1.0s; }
+        .text-block:nth-child(6) { animation-delay: 1.2s; }
+        .text-block:nth-child(7) { animation-delay: 1.4s; }
+        .text-block:nth-child(8) { animation-delay: 1.6s; }
+        .text-block:nth-child(9) { animation-delay: 1.8s; }
+
+        .special-date {
+            display: block;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 15px 0 5px;
+            font-size: 1.2rem;
+        }
+
+        .date-description {
+            font-style: italic;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #ff69b4;
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, rgba(255, 215, 0, 0.3) 40%);
+            padding: 0 5px;
+        }
+
+        .heart {
+            color: #ff69b4;
+            animation: heartbeat 1.5s ease infinite;
+            display: inline-block;
+        }
+
+        .credits-controls {
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease 2.5s forwards;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #8a2be2;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Elementos decorativos */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            color: #ffd700;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: 1s;
+            color: #ff69b4;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: 2s;
+            color: #00ffff;
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 5%;
+            animation-delay: 3s;
+            color: #ff8c00;
+        }
+
+        .floating-element:nth-child(5) {
+            top: 40%;
+            left: 8%;
+            animation-delay: 4s;
+            color: #ffd700;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+                border-radius: 20px;
+            }
+            
+            .login-title, .credits-title {
+                font-size: 2rem;
+            }
+            
+            .login-screen, .credits-screen {
+                padding: 30px 20px;
+            }
+            
+            .credits-text {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            
+            .video-container {
+                height: 60vh;
+            }
+            
+            .special-date {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Estilos para mejorar la experiencia táctil */
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        input, button {
+            font-size: 16px; /* Evita el zoom en iOS */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Pantalla de login -->
+        <div class="login-screen" id="loginScreen">
+            <div class="floating-elements">
+                <div class="floating-element"><i class="fas fa-birthday-cake"></i></div>
+                <div class="floating-element"><i class="fas fa-gift"></i></div>
+                <div class="floating-element"><i class="fas fa-heart"></i></div>
+                <div class="floating-element"><i class="fas fa-star"></i></div>
+                <div class="floating-element"><i class="fas fa-music"></i></div>
+            </div>
+            
+            <h1 class="login-title">Feliz Cumpleaños Lisa</h1>
+            <p class="login-subtitle">Ingresa la contraseña para descubrir tu sorpresa especial</p>
+            
+            <div class="password-container">
+                <label class="password-label" for="password">Contraseña Secreta</label>
+                <input type="password" id="password" class="password-input" placeholder="Introduce la fecha especial">
+                <div class="password-hint">Pista: Una fecha importante en formato DDMMAA</div>
+            </div>
+            
+            <button class="login-btn" id="loginBtn">
+                <i class="fas fa-lock-open"></i> Descubrir Sorpresa
+            </button>
+            
+            <div class="error-msg" id="errorMsg">
+                <i class="fas fa-exclamation-circle"></i> Contraseña incorrecta. ¡Intenta de nuevo!
+            </div>
+        </div>
+
+        <!-- Pantalla del video -->
+        <div class="video-screen" id="videoScreen">
+            <div class="video-container">
+                <video id="birthdayVideo" controls autoplay playsinline>
+                    <source src="video1.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+        </div>
+
+        <!-- Pantalla de créditos con texto continuo -->
+        <div class="credits-screen" id="creditsScreen">
+            <h1 class="credits-title">Feliz Cumpleaños Lisa</h1>
+            
+            <div class="credits-text">
+                <div class="text-block">
+                    <p>Feliz Cumpleaños Lisa, hoy es un día muy especial porque celebro tu existencia. Eres una persona increíble que ilumina la vida de todos los que te rodean. Tu sonrisa es contagiosa y tu corazón es de oro puro. Que este nuevo año de vida te traiga mucha felicidad, amor y todos los sueños cumplidos.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>El 29/4/2025 fue el día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>El 3/10/2025 fue cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>Eres una persona maravillosa con un corazón increíble, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>Siempre estás ahí para los demás, sin importar las circunstancias. Tu bondad y generosidad no tienen límites, y siempre das lo mejor de ti en todo lo que haces. Eres el tipo de persona que hace del mundo un lugar mejor con tu sola presencia, con esa energía positiva que irradias y que contagias a todos a tu alrededor.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>Tienes cualidades únicas que te hacen especial: eres inteligente, divertida y tienes un gran sentido del humor que puede alegrar incluso el día más gris. Eres super fuerte, superas cualquier obstáculo con gracia y determinación, demostrando una valentía admirable en cada desafío que la vida te presenta.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>Te mereces todo lo mejor del mundo porque siempre das lo mejor de ti en cada cosa que haces, enfrentando cada día con una sonrisa y una actitud positiva que inspira a los demás. Tratas a todos con respeto y cariño genuino, sin importar quiénes sean, porque tu corazón es increíble.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>Ojalá este año podamos vernos y compartir risas y momentos inolvidables juntos. Me encantaría poder crear nuevos recuerdos contigo y fortalecer aún más nuestra amistad.</p>
+                </div>
+                
+                <div class="text-block">
+                    <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, dime. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
+                    
+                    <p>¡Feliz Cumpleaños Lisa! Que este día esté lleno de alegría genuina, risas contagiosas, amor sincero y todos los buenos deseos que mereces por ser la persona maravillosa que eres. Te deseo un año lleno de aventuras emocionantes, crecimiento personal significativo, sueños cumplidos y momentos verdaderamente inolvidables.</p>
+                </div>
+            </div>
+            
+            <div class="credits-controls">
+                <button class="restart-btn" id="restartBtn">
+                    <i class="fas fa-redo"></i> Volver al Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginScreen = document.getElementById('loginScreen');
+            const videoScreen = document.getElementById('videoScreen');
+            const creditsScreen = document.getElementById('creditsScreen');
+            const loginBtn = document.getElementById('loginBtn');
+            const restartBtn = document.getElementById('restartBtn');
+            const passwordInput = document.getElementById('password');
+            const errorMsg = document.getElementById('errorMsg');
+            const video = document.getElementById('birthdayVideo');
+
+            // Contraseña correcta
+            const correctPassword = '290425';
+
+            // Manejar el login
+            loginBtn.addEventListener('click', function() {
+                if (passwordInput.value === correctPassword) {
+                    // Login exitoso
+                    loginScreen.style.display = 'none';
+                    videoScreen.style.display = 'flex';
+                    
+                    // Reproducir el video automáticamente
+                    video.play().catch(function(error) {
+                        console.log("La reproducción automática falló: ", error);
+                    });
+                } else {
+                    // Mostrar error
+                    errorMsg.style.display = 'block';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    
+                    // Ocultar el error después de 3 segundos
+                    setTimeout(function() {
+                        errorMsg.style.display = 'none';
+                    }, 3000);
+                }
+            });
+
+            // Volver al inicio desde los créditos
+            restartBtn.addEventListener('click', function() {
+                creditsScreen.style.display = 'none';
+                loginScreen.style.display = 'block';
+                passwordInput.value = '';
+                video.currentTime = 0;
+                video.pause();
+            });
+
+            // Permitir login con Enter
+            passwordInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    loginBtn.click();
+                }
+            });
+
+            // Si el video termina, mostrar automáticamente los créditos
+            video.addEventListener('ended', function() {
+                videoScreen.style.display = 'none';
+                creditsScreen.style.display = 'flex';
+            });
+        });
+    </script>
+</body>
+</html>
