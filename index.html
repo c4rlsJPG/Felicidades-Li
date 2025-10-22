@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Cumpleaños Lisa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,20 +19,134 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
+            align-items: flex-start;
+            overflow: hidden;
             color: #fff;
             padding: 15px;
             background-size: 200% 200%;
             animation: gradientShift 10s ease infinite;
+            position: relative;
+        }
+        
+        /* Fondo decorativo */
+        .background-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        /* FONDO ESPECIAL FELIZ CUMPLEAÑOS LISA - MODIFICADO */
+        .special-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%; /* Reducido de 100% a 60% */
+            background: rgba(138, 43, 226, 0.1);
+            backdrop-filter: blur(5px);
+            z-index: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Cambiado de center a flex-start */
+            pointer-events: none;
+            padding-top: 40px; /* Añadido espacio superior */
+        }
+
+        .birthday-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            background: linear-gradient(135deg, #ffd700, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0.1;
+            transform: rotate(-5deg);
+            text-align: center;
+            line-height: 1.3;
+            animation: float 8s ease-in-out infinite;
+            margin-top: 20px; /* Añadido margen superior */
+        }
+        
+        /* Pantalla de video - MEJORADA */
+        .video-screen {
+            display: none;
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            z-index: 10;
+            background: transparent;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            background: #000;
+        }
+
+        /* Overlay para hacer clic y mostrar controles si es necesario */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            cursor: pointer;
+            z-index: 5;
+            border-radius: 15px;
+        }
+
+        .video-overlay:hover::after {
+            content: 'Haz clic para controles';
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeInOut 3s ease;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
 
         .container {
             width: 100%;
             max-width: 500px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            border-radius: 25px; /* Borde redondeado en todas las esquinas */
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             position: relative;
@@ -39,6 +154,9 @@
             flex-direction: column;
             min-height: 80vh;
             transition: all 0.3s ease;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-top: 40px; /* Aumentado de 20px a 40px */
         }
 
         /* Pantalla de login */
@@ -52,6 +170,7 @@
             flex-direction: column;
             justify-content: center;
             flex-grow: 1;
+            border-radius: 25px; /* Asegurar que el interior también tenga bordes redondeados */
         }
 
         .login-title {
@@ -67,7 +186,7 @@
         .login-subtitle {
             font-size: 1.1rem;
             margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 300;
         }
 
@@ -97,12 +216,19 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .password-input:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.25);
             box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .password-hint {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .login-btn {
@@ -122,6 +248,11 @@
             margin-bottom: 15px;
         }
 
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 215, 0, 0.4);
+        }
+
         .error-msg {
             color: #ff4d4d;
             margin-top: 15px;
@@ -130,93 +261,228 @@
             animation: shake 0.5s ease;
         }
 
-        /* PANTALLA DE VIDEO - CORREGIDA */
-        .video-screen {
-            display: none;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-        }
-
-        .video-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        video {
-            /* Video responsive que se ajusta al contenedor */
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-        }
-
-        /* PANTALLA DE CRÉDITOS - MEJORADA */
+        /* PANTALLA DE CRÉDITOS - COMPLETAMENTE TRANSPARENTE Y FIJA */
         .credits-screen {
             display: none;
             flex-direction: column;
-            height: 100%;
-            overflow-y: auto;
-            background: linear-gradient(135deg, #4b0082, #8a2be2);
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: transparent; /* Fondo completamente transparente */
+            z-index: 20;
+            overflow: hidden;
+            padding: 20px;
+            /* EVITAR QUE SE MUEVA EL FONDO */
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: auto;
+        }
+
+        /* CONTENEDOR PRINCIPAL DE CRÉDITOS - NO SCROLLABLE */
+        .credits-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            height: calc(100vh - 180px);
+            justify-content: center;
+            /* EVITAR SCROLL */
+            overflow: hidden;
+            overscroll-behavior: none;
         }
 
         .credits-header {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 25px 20px;
             text-align: center;
-            position: sticky;
-            top: 0;
+            padding: 15px 0;
+            position: relative;
             z-index: 100;
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
         }
 
+        /* TÍTULO PRINCIPAL GRANDE Y BONITO */
         .credits-title {
-            font-size: 2.2rem;
-            background: linear-gradient(to right, #ffd700, #ff69b4);
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, #ffd700, #ff69b4, #ff1493);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
             margin: 0;
+            padding: 10px 0;
+            animation: pulse 2s ease infinite;
+            line-height: 1.1;
         }
 
-        .credits-content {
-            padding: 30px 20px;
-            flex-grow: 1;
+        /* SLIDER COMPACTO CON FONDO TRANSPARENTE - MÁS FLUIDO */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05); /* Muy transparente */
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* EVITAR SCROLL */
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: auto;
+            /* MEJOR RENDIMIENTO */
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transición más suave */
+            height: 100%;
+            /* EVITAR SCROLL */
+            overscroll-behavior: none;
+            /* MEJOR RENDIMIENTO */
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .slide {
+            min-width: 100%;
+            padding: 30px;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            /* EVITAR SCROLL VERTICAL */
+            overflow: hidden;
+            overscroll-behavior: none;
+            /* MEJOR RENDIMIENTO */
+            transform: translateZ(0);
         }
 
-        .credits-text {
-            text-align: left;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            line-height: 1.7;
+        .slide-content {
+            line-height: 1.6;
             font-size: 1.1rem;
+            text-align: center;
+            max-width: 95%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* EVITAR SCROLL */
+            overflow: hidden;
+            overscroll-behavior: none;
+            /* MEJOR RENDIMIENTO */
+            transform: translateZ(0);
         }
 
-        .text-block {
-            margin-bottom: 20px;
-            opacity: 1; /* Sin animación de entrada */
-            transform: none;
+        /* INDICADOR DE DESLIZAMIENTO - POSICIONADO MÁS ARRIBA */
+        .swipe-indicator {
+            position: absolute;
+            top: 20px; /* Cambiado de bottom a top */
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 30;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            margin: 0 auto;
+            width: fit-content;
+            min-width: 220px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .text-block:last-child {
-            margin-bottom: 0;
+        .swipe-indicator i {
+            margin-right: 8px;
+            animation: swipeUpAnimation 1.5s infinite;
+        }
+
+        @keyframes swipeUpAnimation {
+            0% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(-5px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.7; }
+        }
+
+        /* DECORACIÓN DE TEXTOS MEJORADA */
+        .text-decoration-1 {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 105, 180, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #ffd700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 8px 0;
+        }
+
+        .text-decoration-2 {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(255, 105, 180, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            border-right: 4px solid #ff69b4;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 8px 0;
+        }
+
+        .text-decoration-3 {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(138, 43, 226, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            border-top: 4px solid #8a2be2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 8px 0;
+        }
+
+        .text-decoration-4 {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.15), rgba(255, 215, 0, 0.15));
+            padding: 20px;
+            border-radius: 15px;
+            border-bottom: 4px solid #ff1493;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 8px 0;
+        }
+
+        .special-date {
+            text-align: center;
+            margin: 12px 0;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.15);
+            border-radius: 12px;
+            border-left: 3px solid #ffd700;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .date-text {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .special-message {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(255, 215, 0, 0.2));
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 105, 180, 0.4);
+            margin: 15px 0;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            animation: pulse 3s ease infinite;
+        }
+
+        .special-message-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffd700;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .heart {
@@ -225,44 +491,208 @@
             display: inline-block;
         }
 
-        .credits-controls {
-            margin-top: 30px;
-            padding: 20px;
+        /* Mensaje final mejorado */
+        .final-message {
             text-align: center;
-        }
-
-        .restart-btn {
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #8a2be2;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Elementos decorativos */
-        .floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            max-width: 600px;
         }
 
+        .te-quiero-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            background: linear-gradient(to right, #ffd700, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            animation: pulse 2s ease infinite;
+        }
+
+        .never-forget {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.6rem;
+            color: #ffd700;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .hands-emoji {
+            font-size: 2.2rem;
+            animation: float 3s ease-in-out infinite;
+            display: block;
+            margin-top: 8px;
+        }
+
+        /* Elementos decorativos flotantes */
         .floating-element {
             position: absolute;
             font-size: 1.5rem;
             opacity: 0.7;
             animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        /* Globos dinámicos con trayectorias parabólicas */
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            z-index: 0;
+            bottom: -60px;
+            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.2);
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+
+        .balloon-1 { background: linear-gradient(135deg, #ff69b4, #ff1493); }
+        .balloon-2 { background: linear-gradient(135deg, #00ffff, #1e90ff); }
+        .balloon-3 { background: linear-gradient(135deg, #ffd700, #ff8c00); }
+        .balloon-4 { background: linear-gradient(135deg, #98fb98, #32cd32); }
+        .balloon-5 { background: linear-gradient(135deg, #dda0dd, #8a2be2); }
+        .balloon-6 { background: linear-gradient(135deg, #ffb6c1, #ff69b4); }
+        .balloon-7 { background: linear-gradient(135deg, #87ceeb, #1e90ff); }
+        .balloon-8 { background: linear-gradient(135deg, #f0e68c, #ffd700); }
+        .balloon-9 { background: linear-gradient(135deg, #ffa07a, #ff4500); }
+
+        /* Corazones dinámicos */
+        .floating-heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            bottom: -30px;
+            text-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Confeti - NUEVOS ESTILOS MEJORADOS */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #ffd700;
+            opacity: 0.7;
+            border-radius: 1px;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* NUEVOS ELEMENTOS DECORATIVOS */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation-timing-function: linear;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+            animation-timing-function: ease-in-out;
+        }
+
+        .ribbon {
+            position: absolute;
+            height: 20px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ff69b4);
+            transform: rotate(45deg);
+            opacity: 0.6;
+            animation-timing-function: ease-in-out;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 3px currentColor;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Estrellas */
+        .star {
+            position: absolute;
+            color: #ffd700;
+            font-size: 1rem;
+            opacity: 0;
+            animation-timing-function: ease-in-out;
+        }
+
+        /* Diamantes */
+        .diamond {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #00ffff, #1e90ff);
+            transform: rotate(45deg);
+            opacity: 0.8;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Flores */
+        .flower {
+            position: absolute;
+            font-size: 1.3rem;
+            color: #ff69b4;
+            opacity: 0.7;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Cañones de confeti */
+        .cannon {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50% 50% 0 0;
+            z-index: 2;
+        }
+
+        .cannon::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
         }
 
         /* Animaciones */
@@ -295,20 +725,149 @@
             100% { background-position: 0% 50%; }
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Trayectorias parabólicas */
+        @keyframes parabolaLeft {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            25% { transform: translate(20vw, -25vh) rotate(90deg); }
+            50% { transform: translate(40vw, -50vh) rotate(180deg); }
+            75% { transform: translate(60vw, -75vh) rotate(270deg); }
+            100% { transform: translate(80vw, -100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes parabolaRight {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            25% { transform: translate(-20vw, -25vh) rotate(-90deg); }
+            50% { transform: translate(-40vw, -50vh) rotate(-180deg); }
+            75% { transform: translate(-60vw, -75vh) rotate(-270deg); }
+            100% { transform: translate(-80vw, -100vh) rotate(-360deg); opacity: 0; }
+        }
+
+        @keyframes parabolaCenter {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            25% { transform: translate(-15vw, -25vh) rotate(-90deg); }
+            50% { transform: translate(15vw, -50vh) rotate(-180deg); }
+            75% { transform: translate(-10vw, -75vh) rotate(-270deg); }
+            100% { transform: translate(5vw, -100vh) rotate(-360deg); opacity: 0; }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            50% { transform: translateY(-55vh) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-55vh) rotate(180deg) scale(1.2); }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-50px) rotate(0deg) scale(1); opacity: 0.7; }
+            50% { transform: translateY(50vh) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(100vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0.5) rotate(360deg); }
+        }
+
+        @keyframes diamondSpin {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-55vh) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        @keyframes flowerFloat {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
+            25% { transform: translateY(-25vh) rotate(90deg) scale(1.1); }
+            50% { transform: translateY(-50vh) rotate(180deg) scale(1); }
+            75% { transform: translateY(-75vh) rotate(270deg) scale(1.1); }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+
+        /* NUEVAS ANIMACIONES PARA ELEMENTOS DECORATIVOS */
+        @keyframes bubbleFloat {
+            0% { transform: translateY(0) scale(1); opacity: 0.7; }
+            50% { transform: translateY(-40vh) scale(1.2); opacity: 0.9; }
+            100% { transform: translateY(-80vh) scale(1); opacity: 0; }
+        }
+
+        @keyframes sparkleTwinkle {
+            0% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.5) rotate(180deg); box-shadow: 0 0 10px 3px white; }
+            100% { opacity: 0; transform: scale(0.3) rotate(360deg); }
+        }
+
+        @keyframes ribbonFloat {
+            0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-50vh) rotate(135deg) scale(1.1); opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(225deg) scale(1); opacity: 0; }
+        }
+
+        @keyframes fireworkExplode {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            30% { transform: translateY(-30vh) scale(1.5); opacity: 0.9; }
+            60% { transform: translateY(-60vh) scale(2); opacity: 0.7; }
+            100% { transform: translateY(-100vh) scale(2.5); opacity: 0; }
+        }
+
         /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .birthday-text {
+                font-size: 3rem;
+            }
+            
+            .credits-title {
+                font-size: 3.5rem;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+            
+            .slide-content {
+                font-size: 1rem;
+            }
+            
+            .swipe-indicator {
+                top: 15px;
+                padding: 10px 15px;
+                min-width: 200px;
+                font-size: 1rem;
+            }
+        }
+
         @media (max-width: 480px) {
             body {
                 padding: 10px;
-                align-items: flex-start;
+            }
+            
+            .special-background {
+                height: 50%; /* Aún más reducido en móviles */
+                padding-top: 20px;
+            }
+            
+            .birthday-text {
+                font-size: 3rem; /* Texto más pequeño en móviles */
+                margin-top: 10px;
             }
             
             .container {
                 max-width: 100%;
-                min-height: 90vh;
-                margin: 10px 0;
+                min-height: 85vh; /* Un poco más alto */
+                margin: 30px 0 10px 0; /* Más margen superior, menos inferior */
             }
             
-            .login-title, .credits-title {
+            .login-title {
                 font-size: 2rem;
             }
             
@@ -316,17 +875,20 @@
                 padding: 30px 20px;
             }
             
-            .credits-header {
-                padding: 20px 15px;
+            .credits-screen {
+                padding: 15px;
             }
             
-            .credits-content {
-                padding: 20px 15px;
+            .credits-title {
+                font-size: 2.8rem;
             }
             
-            .credits-text {
-                padding: 20px;
-                font-size: 1rem;
+            .slide {
+                padding: 15px;
+            }
+            
+            .slide-content {
+                font-size: 0.95rem;
             }
             
             /* Video en móviles - ajuste seguro */
@@ -337,12 +899,55 @@
             video {
                 width: 100%;
                 height: auto;
-                max-height: 70vh;
+            }
+            
+            /* Ajustar decoración para móviles */
+            .balloon {
+                width: 30px;
+                height: 40px;
+            }
+            
+            .floating-element, .floating-heart {
+                font-size: 1rem;
+            }
+            
+            /* Ajustes para el mensaje final en móviles */
+            .te-quiero-text {
+                font-size: 2.5rem;
+            }
+            
+            .never-forget {
+                font-size: 1.4rem;
+            }
+            
+            .hands-emoji {
+                font-size: 2rem;
+            }
+            
+            .swipe-indicator {
+                top: 10px;
+                padding: 8px 12px;
+                min-width: 180px;
+                font-size: 0.9rem;
             }
         }
 
         @media (max-width: 360px) {
-            .login-title, .credits-title {
+            .special-background {
+                height: 45%; /* Mínimo para móviles muy pequeños */
+                padding-top: 15px;
+            }
+            
+            .birthday-text {
+                font-size: 2.5rem;
+                margin-top: 5px;
+            }
+            
+            .container {
+                margin: 25px 0 5px 0;
+            }
+            
+            .login-title {
                 font-size: 1.8rem;
             }
             
@@ -350,8 +955,27 @@
                 padding: 20px 15px;
             }
             
-            .credits-text {
-                padding: 15px;
+            .slide {
+                padding: 12px;
+            }
+            
+            .te-quiero-text {
+                font-size: 2rem;
+            }
+            
+            .never-forget {
+                font-size: 1.2rem;
+            }
+            
+            .credits-title {
+                font-size: 2.2rem;
+            }
+            
+            .swipe-indicator {
+                top: 8px;
+                padding: 6px 10px;
+                min-width: 160px;
+                font-size: 0.85rem;
             }
         }
 
@@ -366,17 +990,50 @@
         
         html, body {
             height: 100%;
+            overflow: hidden;
+        }
+        
+        /* Mejoras para PC - video más grande */
+        @media (min-width: 1024px) {
+            .video-container {
+                max-width: 1000px;
+            }
+            
+            video {
+                max-height: 80vh;
+                object-fit: contain;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Fondo especial "Feliz Cumpleaños Lisa" -->
+    <div class="special-background">
+        <div class="birthday-text">Feliz<br>Cumpleaños<br>Lisa</div>
+    </div>
+
+    <!-- Decoración de fondo -->
+    <div class="background-elements" id="backgroundElements">
+        <!-- Los elementos se generarán dinámicamente con JavaScript -->
+    </div>
+
+    <!-- Cañones de confeti -->
+    <div class="cannon" style="left: 10%;"></div>
+    <div class="cannon" style="left: 30%;"></div>
+    <div class="cannon" style="left: 50%;"></div>
+    <div class="cannon" style="left: 70%;"></div>
+    <div class="cannon" style="left: 90%;"></div>
+
+    <div class="container" id="mainContainer">
         <!-- Pantalla de login -->
         <div class="login-screen" id="loginScreen">
             <div class="floating-elements">
                 <div class="floating-element" style="top:10%;left:5%;color:#ffd700;"><i class="fas fa-birthday-cake"></i></div>
                 <div class="floating-element" style="top:20%;right:10%;color:#ff69b4;"><i class="fas fa-gift"></i></div>
                 <div class="floating-element" style="bottom:30%;left:15%;color:#00ffff;"><i class="fas fa-heart"></i></div>
+                <div class="floating-element" style="top:40%;right:5%;color:#ffd700;"><i class="fas fa-star"></i></div>
+                <div class="floating-element" style="bottom:20%;right:15%;color:#98fb98;"><i class="fas fa-music"></i></div>
+                <div class="floating-element" style="top:60%;left:10%;color:#dda0dd;"><i class="fas fa-crown"></i></div>
             </div>
             
             <h1 class="login-title">Feliz Cumpleaños Lisa</h1>
@@ -384,7 +1041,7 @@
             
             <div class="password-container">
                 <label class="password-label" for="password">Contraseña Secreta</label>
-                <input type="password" id="password" class="password-input" placeholder="Introduce la fecha especial">
+                <input type="password" id="password" class="password-input" placeholder="Introduce la fecha especial" inputmode="numeric" pattern="[0-9]*">
                 <div class="password-hint">Pista: Una fecha importante en formato DDMMAA</div>
             </div>
             
@@ -396,68 +1053,136 @@
                 <i class="fas fa-exclamation-circle"></i> Contraseña incorrecta. ¡Intenta de nuevo!
             </div>
         </div>
+    </div>
 
-        <!-- Pantalla del video -->
-        <div class="video-screen" id="videoScreen">
-            <div class="video-container">
-                <video id="birthdayVideo" controls autoplay playsinline>
-                    <source src="video1.mp4" type="video/mp4">
-                    Tu navegador no soporta el elemento de video.
-                </video>
-            </div>
+    <!-- Pantalla del video - MEJORADA -->
+    <div class="video-screen" id="videoScreen">
+        <div class="video-container">
+            <video id="birthdayVideo" playsinline preload="auto">
+                <source src="video1.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
+            <div class="video-overlay" id="videoOverlay"></div>
         </div>
+    </div>
 
-        <!-- Pantalla de créditos - MEJORADA -->
-        <div class="credits-screen" id="creditsScreen">
-            <div class="credits-header">
-                <h1 class="credits-title">Feliz Cumpleaños Lisa</h1>
-            </div>
-            
-            <div class="credits-content">
-                <div class="credits-text">
-                    <div class="text-block">
-                        <p>Feliz Cumpleaños Lisa, hoy es un día muy especial porque celebro tu existencia. Eres una persona increíble que ilumina la vida de todos los que te rodean. Tu sonrisa es contagiosa y tu corazón es de oro puro. Que este nuevo año de vida te traiga mucha felicidad, amor y todos los sueños cumplidos.</p>
+    <!-- Pantalla de créditos - COMPLETAMENTE TRANSPARENTE Y FIJA -->
+    <div class="credits-screen" id="creditsScreen">
+        <div class="credits-header">
+            <!-- TÍTULO PRINCIPAL GRANDE Y BONITO -->
+            <h1 class="credits-title">¡Feliz cumpleaños Liii!</h1>
+        </div>
+        
+        <div class="credits-content">
+            <div class="slider-container" id="sliderContainer">
+                <div class="slider" id="slider">
+                    <!-- Slide 1 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-1">
+                                <p>Feliz Cumpleaños Lisa, hoy es un día muy especial porque celebro tu existencia. Eres una persona increíble que ilumina la vida de todos los que te rodean. Tu sonrisa es contagiosa y tu corazón es de oro puro. Que este nuevo año de vida te traiga mucha felicidad, amor y todos los sueños cumplidos.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>El 29/4/2025 fue el día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</p>
+                    <!-- Slide 2 - Fechas unificadas -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="special-date">
+                                <div class="date-text">29/4/2025</div>
+                                <div>El día que nos conocimos y empezó nuestra amistad. Desde ese momento supe ya la persona maravillosa que eres.</div>
+                            </div>
+                            
+                            <div class="special-date">
+                                <div class="date-text">3/10/2025</div>
+                                <div>Cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>El 3/10/2025 fue cuando nos hicimos mejores amigos. No me pudiste hacer más feliz, es un día que nunca olvidaré.</p>
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-2">
+                                <p>Eres una persona maravillosa con un corazón increíble, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>Eres una persona maravillosa con un corazón increíble, eres graciosa, buena persona, guapa, lista, tonta como yo, te preocupas por las personas un montón, tienes el corazón más puro que puede existir, que nadie te diga lo contrario.</p>
+                    <!-- Slide 4 - NUEVO MENSAJE ESPECIAL -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="special-message">
+                                <div class="special-message-text">
+                                    Me sabes sacar una sonrisa cuando no la tengo, muchisimas gracias 💖
+                                </div>
+                            </div>
+                            <div class="text-decoration-3">
+                                <p>Siempre estás ahí para los demás, sin importar las circunstancias. Tu bondad y generosidad no tienen límites, y siempre das lo mejor de ti en todo lo que haces. Eres el tipo de persona que hace del mundo un lugar mejor con tu sola presencia, con esa energía positiva que irradias y que contagias a todos a tu alrededor.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>Siempre estás ahí para los demás, sin importar las circunstancias. Tu bondad y generosidad no tienen límites, y siempre das lo mejor de ti en todo lo que haces. Eres el tipo de persona que hace del mundo un lugar mejor con tu sola presencia, con esa energía positiva que irradias y que contagias a todos a tu alrededor.</p>
+                    <!-- Slide 5 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-4">
+                                <p>Tienes cualidades únicas que te hacen especial: eres inteligente, divertida y tienes un gran sentido del humor que puede alegrar incluso el día más gris. Eres super fuerte, superas cualquier obstáculo con gracia y determinación, demostrando una valentía admirable en cada desafío que la vida te presenta.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>Tienes cualidades únicas que te hacen especial: eres inteligente, divertida y tienes un gran sentido del humor que puede alegrar incluso el día más gris. Eres super fuerte, superas cualquier obstáculo con gracia y determinación, demostrando una valentía admirable en cada desafío que la vida te presenta.</p>
+                    <!-- Slide 6 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-1">
+                                <p>Te mereces todo lo mejor del mundo porque siempre das lo mejor de ti en cada cosa que haces, enfrentando cada día con una sonrisa y una actitud positiva que inspira a los demás. Tratas a todos con respeto y cariño genuino, sin importar quiénes sean, porque tu corazón es increíble.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>Te mereces todo lo mejor del mundo porque siempre das lo mejor de ti en cada cosa que haces, enfrentando cada día con una sonrisa y una actitud positiva que inspira a los demás. Tratas a todos con respeto y cariño genuino, sin importar quiénes sean, porque tu corazón es increíble.</p>
+                    <!-- Slide 7 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-2">
+                                <p>Ojalá este año podamos vernos y compartir risas y momentos inolvidables juntos. Me encantaría poder crear nuevos recuerdos contigo y fortalecer aún más nuestra amistad.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>Ojalá este año podamos vernos y compartir risas y momentos inolvidables juntos. Me encantaría poder crear nuevos recuerdos contigo y fortalecer aún más nuestra amistad.</p>
+                    <!-- Slide 8 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-3">
+                                <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, dime. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-block">
-                        <p>Y como siempre te digo, si necesitas ayuda, si necesitas decirme algo, si necesitas un apoyo, dime. Yo seré el pilar que te sujete en los peores momentos. Tanto en las buenas como en las malas, siempre estaré junto a ti <span class="heart">❤️</span>.</p>
-                        
-                        <p>¡Feliz Cumpleaños Lisa! Que este día esté lleno de alegría genuina, risas contagiosas, amor sincero y todos los buenos deseos que mereces por ser la persona maravillosa que eres. Te deseo un año lleno de aventuras emocionantes, crecimiento personal significativo, sueños cumplidos y momentos verdaderamente inolvidables.</p>
+                    <!-- Slide 9 -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="text-decoration-4">
+                                <p>¡Feliz Cumpleaños Lisa! Que este día esté lleno de alegría genuina, risas contagiosas, amor sincero y todos los buenos deseos que mereces por ser la persona maravillosa que eres. Te deseo un año lleno de aventuras emocionantes, crecimiento personal significativo, sueños cumplidos y momentos verdaderamente inolvidables.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 10 - Mensaje Final -->
+                    <div class="slide">
+                        <div class="slide-content">
+                            <div class="final-message">
+                                <div class="te-quiero-text">Te Quiero Muchísimo</div>
+                                <div class="never-forget">nunca lo olvides</div>
+                                <div class="hands-emoji">🫶🏻🫶🏻🫶🏻</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="credits-controls">
-                    <button class="restart-btn" id="restartBtn">
-                        <i class="fas fa-redo"></i> Volver al Inicio
-                    </button>
+                <!-- Indicador de deslizamiento - POSICIONADO ARRIBA -->
+                <div class="swipe-indicator" id="swipeIndicator">
+                    <i class="fas fa-arrow-up"></i> Desliza hacia arriba para continuar
                 </div>
             </div>
         </div>
@@ -468,28 +1193,537 @@
             const loginScreen = document.getElementById('loginScreen');
             const videoScreen = document.getElementById('videoScreen');
             const creditsScreen = document.getElementById('creditsScreen');
+            const mainContainer = document.getElementById('mainContainer');
             const loginBtn = document.getElementById('loginBtn');
-            const restartBtn = document.getElementById('restartBtn');
             const passwordInput = document.getElementById('password');
             const errorMsg = document.getElementById('errorMsg');
             const video = document.getElementById('birthdayVideo');
+            const videoOverlay = document.getElementById('videoOverlay');
+            const backgroundElements = document.getElementById('backgroundElements');
+            const sliderContainer = document.getElementById('sliderContainer');
+            const swipeIndicator = document.getElementById('swipeIndicator');
+
+            // Elementos del slider
+            const slider = document.getElementById('slider');
 
             // Contraseña correcta
             const correctPassword = '290425';
 
+            // Configuración del slider
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+
+            // Ir a una diapositiva específica - SOLO PERMITE AVANZAR
+            function goToSlide(slideIndex) {
+                // Solo permite avanzar, no retroceder
+                if (slideIndex <= currentSlide) {
+                    return; // No hacer nada si intenta retroceder
+                }
+                
+                if (slideIndex >= totalSlides) {
+                    slideIndex = totalSlides - 1; // No ir más allá del último slide
+                }
+                
+                currentSlide = slideIndex;
+                
+                // Usar requestAnimationFrame para mayor fluidez
+                requestAnimationFrame(() => {
+                    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                });
+                
+                // Ocultar el indicador después del primer deslizamiento
+                if (currentSlide > 0) {
+                    swipeIndicator.style.display = 'none';
+                }
+            }
+
+            // Navegación siguiente (solo adelante)
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+
+            // Inicializar el slider
+            function initSlider() {
+                // Navegación con teclado - solo flecha derecha funciona
+                document.addEventListener('keydown', (e) => {
+                    if (creditsScreen.style.display === 'flex') {
+                        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                            nextSlide();
+                        }
+                        // La flecha izquierda no hace nada
+                    }
+                });
+                
+                // Navegación táctil para móviles - MEJORADA
+                let startY = 0;
+                let endY = 0;
+                let isSwiping = false;
+                
+                sliderContainer.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                    isSwiping = true;
+                }, { passive: true });
+                
+                sliderContainer.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+                    endY = e.touches[0].clientY;
+                }, { passive: true });
+                
+                sliderContainer.addEventListener('touchend', (e) => {
+                    if (!isSwiping) return;
+                    handleSwipe();
+                    isSwiping = false;
+                }, { passive: true });
+                
+                function handleSwipe() {
+                    const diff = startY - endY;
+                    const swipeThreshold = 50;
+                    
+                    // Solo permite deslizar hacia arriba (diferencia positiva)
+                    if (diff > swipeThreshold) {
+                        nextSlide(); // Deslizar hacia arriba -> siguiente
+                    }
+                    // Deslizar hacia abajo no hace nada
+                }
+                
+                // PREVENIR SCROLL EN LOS CRÉDITOS
+                creditsScreen.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+                
+                sliderContainer.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+            }
+
+            // Función para crear elementos decorativos dinámicamente - MEJORADA
+            function createDecorElement() {
+                const elementTypes = ['balloon', 'heart', 'confetti', 'star', 'diamond', 'flower', 'cannonBlast', 'bubble', 'sparkle', 'ribbon', 'firework'];
+                const randomType = elementTypes[Math.floor(Math.random() * elementTypes.length)];
+                
+                const element = document.createElement('div');
+                
+                if (randomType === 'balloon') {
+                    element.className = 'balloon';
+                    
+                    // Seleccionar color aleatorio
+                    const colors = ['balloon-1', 'balloon-2', 'balloon-3', 'balloon-4', 'balloon-5', 
+                                   'balloon-6', 'balloon-7', 'balloon-8', 'balloon-9'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.classList.add(randomColor);
+                    
+                    // Tamaño aleatorio
+                    const size = 30 + Math.random() * 40;
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size * 1.25}px`;
+                    
+                    // Posición inicial aleatoria (desde los lados o desde abajo)
+                    const startFromSide = Math.random() > 0.4;
+                    if (startFromSide) {
+                        // Desde los lados
+                        const fromLeft = Math.random() > 0.5;
+                        element.style.left = fromLeft ? '-60px' : '100vw';
+                        element.style.bottom = `${20 + Math.random() * 30}%`;
+                        
+                        // Trayectoria parabólica
+                        const parabolaType = fromLeft ? 'parabolaLeft' : 'parabolaRight';
+                        element.style.animationName = parabolaType;
+                    } else {
+                        // Desde abajo
+                        const leftPos = Math.random() * 100;
+                        element.style.left = `${leftPos}%`;
+                        element.style.bottom = '-60px';
+                        
+                        // Trayectoria vertical o con oscilación
+                        if (Math.random() > 0.6) {
+                            element.style.animationName = 'parabolaCenter';
+                        } else {
+                            element.style.animationName = 'floatUp';
+                        }
+                    }
+                    
+                    // Duración aleatoria entre 6 y 12 segundos
+                    const duration = 6 + Math.random() * 6;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'heart') {
+                    element.className = 'floating-heart';
+                    element.innerHTML = '<i class="fas fa-heart"></i>';
+                    
+                    // Tamaño aleatorio
+                    const size = 0.8 + Math.random() * 1.5;
+                    element.style.fontSize = `${size}rem`;
+                    
+                    // Color aleatorio
+                    const colors = ['#ff69b4', '#ff1493', '#ffb6c1', '#dc143c', '#ff0000', '#ff8c00', '#ffd700'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.color = randomColor;
+                    
+                    // Posición inicial
+                    const leftPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    
+                    // Trayectoria
+                    const trajectoryTypes = ['floatHeart', 'parabolaLeft', 'parabolaRight', 'parabolaCenter'];
+                    const randomTrajectory = trajectoryTypes[Math.floor(Math.random() * trajectoryTypes.length)];
+                    element.style.animationName = randomTrajectory;
+                    
+                    // Duración aleatoria entre 7 y 14 segundos
+                    const duration = 7 + Math.random() * 7;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'confetti') {
+                    element.className = 'confetti';
+                    
+                    // Color aleatorio
+                    const colors = ['#ffd700', '#ff69b4', '#00ffff', '#98fb98', '#dda0dd', '#ff8c00', '#1e90ff', '#ff1493'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.backgroundColor = randomColor;
+                    
+                    // Forma aleatoria (cuadrada, redonda o triangular)
+                    const shape = Math.random();
+                    if (shape < 0.33) {
+                        element.style.borderRadius = '50%';
+                    } else if (shape < 0.66) {
+                        element.style.borderRadius = '0';
+                        element.style.transform = 'rotate(45deg)';
+                    } else {
+                        element.style.width = '0';
+                        element.style.height = '0';
+                        element.style.borderLeft = '4px solid transparent';
+                        element.style.borderRight = '4px solid transparent';
+                        element.style.borderBottom = `8px solid ${randomColor}`;
+                        element.style.backgroundColor = 'transparent';
+                    }
+                    
+                    // Posición inicial (desde arriba o desde cañones)
+                    if (Math.random() > 0.4) {
+                        // Desde arriba
+                        const leftPos = Math.random() * 100;
+                        element.style.left = `${leftPos}%`;
+                        element.style.top = '-20px';
+                        element.style.animationName = 'confettiFall';
+                    } else {
+                        // Desde cañón
+                        const cannonPositions = [10, 30, 50, 70, 90];
+                        const randomCannon = cannonPositions[Math.floor(Math.random() * cannonPositions.length)];
+                        element.style.left = `${randomCannon}%`;
+                        element.style.bottom = '20px';
+                        
+                        // Trayectoria parabólica desde cañón
+                        element.style.animationName = Math.random() > 0.5 ? 'parabolaLeft' : 'parabolaRight';
+                    }
+                    
+                    // Tamaño aleatorio
+                    const size = 5 + Math.random() * 12;
+                    if (shape >= 0.66) {
+                        // Para triángulos, ajustar el tamaño de manera diferente
+                        element.style.borderBottomWidth = `${size}px`;
+                        element.style.borderLeftWidth = `${size/2}px`;
+                        element.style.borderRightWidth = `${size/2}px`;
+                    } else {
+                        element.style.width = `${size}px`;
+                        element.style.height = `${size}px`;
+                    }
+                    
+                    // Duración aleatoria entre 3 y 7 segundos
+                    const duration = 3 + Math.random() * 4;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'star') {
+                    element.className = 'star';
+                    element.innerHTML = '<i class="fas fa-star"></i>';
+                    
+                    // Tamaño aleatorio
+                    const size = 0.5 + Math.random() * 1.8;
+                    element.style.fontSize = `${size}rem`;
+                    
+                    // Posición aleatoria
+                    const leftPos = Math.random() * 100;
+                    const topPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.top = `${topPos}%`;
+                    
+                    // Color aleatorio
+                    const colors = ['#ffd700', '#ffffff', '#ff8c00', '#98fb98', '#00ffff', '#ff69b4'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.color = randomColor;
+                    
+                    // Animación de titileo
+                    element.style.animationName = 'twinkle';
+                    
+                    // Duración aleatoria entre 2 y 5 segundos
+                    const duration = 2 + Math.random() * 3;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                    // Retraso aleatorio
+                    const delay = Math.random() * 2;
+                    element.style.animationDelay = `${delay}s`;
+                    
+                } else if (randomType === 'diamond') {
+                    element.className = 'diamond';
+                    
+                    // Color aleatorio
+                    const colors = ['#00ffff', '#1e90ff', '#ff69b4', '#ffd700', '#98fb98'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.background = `linear-gradient(135deg, ${randomColor}, ${randomColor}80)`;
+                    
+                    // Tamaño aleatorio
+                    const size = 8 + Math.random() * 10;
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    
+                    // Posición inicial
+                    const leftPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.bottom = '-20px';
+                    
+                    // Trayectoria
+                    element.style.animationName = 'diamondSpin';
+                    
+                    // Duración aleatoria entre 8 y 15 segundos
+                    const duration = 8 + Math.random() * 7;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'flower') {
+                    element.className = 'flower';
+                    element.innerHTML = '<i class="fas fa-spa"></i>';
+                    
+                    // Tamaño aleatorio
+                    const size = 0.8 + Math.random() * 1.2;
+                    element.style.fontSize = `${size}rem`;
+                    
+                    // Color aleatorio
+                    const colors = ['#ff69b4', '#98fb98', '#ffd700', '#dda0dd', '#87ceeb'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.color = randomColor;
+                    
+                    // Posición inicial
+                    const leftPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.bottom = '-30px';
+                    
+                    // Trayectoria
+                    element.style.animationName = 'flowerFloat';
+                    
+                    // Duración aleatoria entre 9 y 16 segundos
+                    const duration = 9 + Math.random() * 7;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'bubble') {
+                    element.className = 'bubble';
+                    
+                    // Tamaño aleatorio
+                    const size = 20 + Math.random() * 60;
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    
+                    // Color aleatorio con transparencia
+                    const colors = ['rgba(255, 215, 0, 0.3)', 'rgba(255, 105, 180, 0.3)', 'rgba(138, 43, 226, 0.3)', 'rgba(255, 255, 255, 0.2)'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.background = randomColor;
+                    
+                    // Posición inicial
+                    const leftPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.bottom = '-50px';
+                    
+                    // Animación
+                    element.style.animationName = 'bubbleFloat';
+                    
+                    // Duración aleatoria
+                    const duration = 8 + Math.random() * 10;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'sparkle') {
+                    element.className = 'sparkle';
+                    
+                    // Posición aleatoria
+                    const leftPos = Math.random() * 100;
+                    const topPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.top = `${topPos}%`;
+                    
+                    // Animación
+                    element.style.animationName = 'sparkleTwinkle';
+                    
+                    // Duración aleatoria
+                    const duration = 1 + Math.random() * 3;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                    // Retraso aleatorio
+                    const delay = Math.random() * 5;
+                    element.style.animationDelay = `${delay}s`;
+                    
+                } else if (randomType === 'ribbon') {
+                    element.className = 'ribbon';
+                    
+                    // Tamaño aleatorio
+                    const width = 30 + Math.random() * 70;
+                    element.style.width = `${width}px`;
+                    
+                    // Posición inicial
+                    const leftPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.bottom = '-30px';
+                    
+                    // Animación
+                    element.style.animationName = 'ribbonFloat';
+                    
+                    // Duración aleatoria
+                    const duration = 6 + Math.random() * 8;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'firework') {
+                    element.className = 'firework';
+                    
+                    // Color aleatorio
+                    const colors = ['#ffd700', '#ff69b4', '#00ffff', '#98fb98', '#ff8c00'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    element.style.color = randomColor;
+                    
+                    // Posición inicial
+                    const leftPos = Math.random() * 100;
+                    element.style.left = `${leftPos}%`;
+                    element.style.bottom = '0';
+                    
+                    // Animación
+                    element.style.animationName = 'fireworkExplode';
+                    
+                    // Duración aleatoria
+                    const duration = 2 + Math.random() * 3;
+                    element.style.animationDuration = `${duration}s`;
+                    
+                } else if (randomType === 'cannonBlast') {
+                    // Crear múltiples confetis desde un cañón
+                    const cannonCount = 15 + Math.floor(Math.random() * 25); // Más confeti
+                    const cannonPositions = [10, 30, 50, 70, 90];
+                    const randomCannon = cannonPositions[Math.floor(Math.random() * cannonPositions.length)];
+                    
+                    for (let i = 0; i < cannonCount; i++) {
+                        setTimeout(() => {
+                            const confetti = document.createElement('div');
+                            confetti.className = 'confetti';
+                            
+                            // Color aleatorio
+                            const colors = ['#ffd700', '#ff69b4', '#00ffff', '#98fb98', '#dda0dd', '#ff8c00'];
+                            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                            confetti.style.backgroundColor = randomColor;
+                            
+                            // Forma aleatoria
+                            if (Math.random() > 0.5) {
+                                confetti.style.borderRadius = '50%';
+                            }
+                            
+                            // Tamaño aleatorio
+                            const size = 5 + Math.random() * 10;
+                            confetti.style.width = `${size}px`;
+                            confetti.style.height = `${size}px`;
+                            
+                            // Posición desde el cañón
+                            confetti.style.left = `${randomCannon}%`;
+                            confetti.style.bottom = '20px';
+                            
+                            // Trayectoria parabólica
+                            confetti.style.animationName = Math.random() > 0.5 ? 'parabolaLeft' : 'parabolaRight';
+                            
+                            // Duración aleatoria
+                            const duration = 2 + Math.random() * 4;
+                            confetti.style.animationDuration = `${duration}s`;
+                            
+                            // Añadir al contenedor
+                            backgroundElements.appendChild(confetti);
+                            
+                            // Eliminar después de la animación
+                            setTimeout(() => {
+                                if (confetti.parentNode) {
+                                    confetti.parentNode.removeChild(confetti);
+                                }
+                            }, duration * 1000);
+                        }, i * 50); // Más rápido
+                    }
+                    
+                    // No crear un elemento principal para cannonBlast
+                    return;
+                }
+                
+                // Añadir el elemento al contenedor
+                backgroundElements.appendChild(element);
+                
+                // Eliminar el elemento después de que termine la animación
+                const duration = parseFloat(element.style.animationDuration) * 1000 || 10000;
+                setTimeout(() => {
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                }, duration);
+            }
+
+            // Iniciar la creación de elementos decorativos - MEJORADA
+            function startDecoration() {
+                // Crear muchos elementos iniciales
+                for (let i = 0; i < 40; i++) { // Más elementos iniciales
+                    setTimeout(createDecorElement, i * 100); // Más rápido
+                }
+                
+                // Continuar creando elementos cada 0.1-0.4 segundos (mucho más frecuente)
+                setInterval(createDecorElement, 100 + Math.random() * 300);
+                
+                // Explosiones de cañón periódicas
+                setInterval(() => {
+                    createDecorElement('cannonBlast');
+                }, 2000 + Math.random() * 3000);
+            }
+
+            // Iniciar la decoración cuando la página cargue
+            startDecoration();
+
+            // Inicializar el slider
+            initSlider();
+
+            // Manejar el video
+            function setupVideo() {
+                // Quitar controles por defecto
+                video.controls = false;
+                
+                // Configurar volumen al 100%
+                video.volume = 1.0;
+                
+                // Overlay para mostrar controles si es necesario
+                let controlsTimeout;
+                videoOverlay.addEventListener('click', function() {
+                    video.controls = true;
+                    video.play();
+                    
+                    // Ocultar controles después de 3 segundos
+                    clearTimeout(controlsTimeout);
+                    controlsTimeout = setTimeout(() => {
+                        video.controls = false;
+                    }, 3000);
+                });
+            }
+
+            // Configurar el video
+            setupVideo();
+
             // Manejar el login
             loginBtn.addEventListener('click', function() {
                 if (passwordInput.value === correctPassword) {
-                    // Login exitoso
-                    loginScreen.style.display = 'none';
+                    // Login exitoso - ocultar contenedor principal y mostrar video
+                    mainContainer.style.display = 'none';
                     videoScreen.style.display = 'flex';
                     
-                    // Forzar ajuste del video
-                    setTimeout(adjustVideoSize, 100);
+                    // Scroll al inicio del video
+                    window.scrollTo(0, 0);
                     
-                    // Reproducir el video automáticamente
+                    // Reproducir el video automáticamente con audio al 100%
+                    video.controls = false;
+                    video.volume = 1.0;
                     video.play().catch(function(error) {
                         console.log("La reproducción automática falló: ", error);
+                        // Si falla el autoplay, mostrar controles
+                        video.controls = true;
                     });
                 } else {
                     // Mostrar error
@@ -501,49 +1735,6 @@
                         errorMsg.style.display = 'none';
                     }, 3000);
                 }
-            });
-
-            // Función para ajustar el tamaño del video CORREGIDA
-            function adjustVideoSize() {
-                const videoContainer = document.querySelector('.video-container');
-                const videoElement = document.getElementById('birthdayVideo');
-                
-                // Resetear estilos
-                videoElement.style.width = 'auto';
-                videoElement.style.height = 'auto';
-                videoElement.style.maxWidth = '100%';
-                videoElement.style.maxHeight = '100%';
-                
-                // Calcular dimensiones
-                const containerWidth = videoContainer.clientWidth;
-                const containerHeight = videoContainer.clientHeight;
-                const videoRatio = videoElement.videoWidth / videoElement.videoHeight;
-                const containerRatio = containerWidth / containerHeight;
-                
-                if (containerRatio > videoRatio) {
-                    // El contenedor es más ancho, ajustar por altura
-                    videoElement.style.height = '100%';
-                    videoElement.style.width = 'auto';
-                } else {
-                    // El contenedor es más alto, ajustar por ancho
-                    videoElement.style.width = '100%';
-                    videoElement.style.height = 'auto';
-                }
-            }
-
-            // Ajustar el video cuando cambie el tamaño
-            window.addEventListener('resize', adjustVideoSize);
-
-            // Cuando el video esté listo, ajustar tamaño
-            video.addEventListener('loadedmetadata', adjustVideoSize);
-
-            // Volver al inicio desde los créditos
-            restartBtn.addEventListener('click', function() {
-                creditsScreen.style.display = 'none';
-                loginScreen.style.display = 'flex';
-                passwordInput.value = '';
-                video.currentTime = 0;
-                video.pause();
             });
 
             // Permitir login con Enter
@@ -558,13 +1749,58 @@
                 videoScreen.style.display = 'none';
                 creditsScreen.style.display = 'flex';
                 
-                // Scroll inmediato a la parte superior
-                creditsScreen.scrollTop = 0;
+                // Scroll al inicio de los créditos
+                window.scrollTo(0, 0);
+                
+                // Aumentar la decoración durante los créditos
+                setInterval(createDecorElement, 80 + Math.random() * 200);
             });
 
-            // Detectar cambios de orientación
-            window.addEventListener('orientationchange', function() {
-                setTimeout(adjustVideoSize, 300);
+            // Permitir volver al inicio desde los créditos con doble tap (solo en el contenido)
+            const creditsContent = document.querySelector('.credits-content');
+            creditsContent.addEventListener('dblclick', function(e) {
+                // Solo funciona si se hace doble clic en el contenido principal, no en los bordes
+                if (e.target.closest('.slider-container') || e.target.closest('.slider-nav')) {
+                    return; // No hacer nada si es en el slider
+                }
+                creditsScreen.style.display = 'none';
+                videoScreen.style.display = 'none';
+                mainContainer.style.display = 'flex';
+                passwordInput.value = '';
+                video.currentTime = 0;
+                video.pause();
+                video.controls = false;
+                
+                // Resetear slider
+                currentSlide = 0;
+                slider.style.transform = `translateX(0)`;
+                
+                // Mostrar indicador de nuevo
+                swipeIndicator.style.display = 'block';
+                
+                // Scroll al inicio
+                window.scrollTo(0, 0);
+            });
+
+            // También permitir volver al inicio desde el video con doble tap
+            videoScreen.addEventListener('dblclick', function() {
+                creditsScreen.style.display = 'none';
+                videoScreen.style.display = 'none';
+                mainContainer.style.display = 'flex';
+                passwordInput.value = '';
+                video.currentTime = 0;
+                video.pause();
+                video.controls = false;
+                
+                // Resetear slider
+                currentSlide = 0;
+                slider.style.transform = `translateX(0)`;
+                
+                // Mostrar indicador de nuevo
+                swipeIndicator.style.display = 'block';
+                
+                // Scroll al inicio
+                window.scrollTo(0, 0);
             });
         });
     </script>
